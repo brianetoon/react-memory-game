@@ -3,12 +3,12 @@ import './App.css';
 import SingleCard from './components/SingleCard';
 
 const cardImages = [
-  { "src": "/img/helmet.png" },
-  { "src": "/img/potion.png" },
-  { "src": "/img/ring.png" },
-  { "src": "/img/scroll.png" },
-  { "src": "/img/shield.png" },
-  { "src": "/img/sword.png" }
+  { "src": "/img/helmet.png", matched: false },
+  { "src": "/img/potion.png", matched: false },
+  { "src": "/img/ring.png", matched: false },
+  { "src": "/img/scroll.png", matched: false },
+  { "src": "/img/shield.png", matched: false },
+  { "src": "/img/sword.png", matched: false }
 ]
 
 function App() {
@@ -39,11 +39,25 @@ function App() {
     if (choiceTwo) {
       if (choiceOne.src === choiceTwo.src) {
         console.log('those cards match!')
+
+        setCards(prevCards => {
+          return prevCards.map(card => {
+            if (card.src === choiceOne.src) {
+              return { ...card, matched: true }
+            } else {
+              return card
+            }
+          })
+        })
+
       } else {
+        // flip cards back over
         console.log('those cards do not match')
       }
       resetTurn()
     }
+
+    console.log(cards)
 
   }, [choiceTwo])
 
