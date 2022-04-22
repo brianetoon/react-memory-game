@@ -30,7 +30,6 @@ function App() {
   // handle a choice
   const handleChoice = (card) => {
     choiceOne ? setChoiceTwo(card) : setChoiceOne(card)
-    // not here
   }
 
   // compare 2 selected cards
@@ -38,7 +37,6 @@ function App() {
 
     if (choiceTwo) {
       if (choiceOne.src === choiceTwo.src) {
-        console.log('those cards match!')
 
         setCards(prevCards => {
           return prevCards.map(card => {
@@ -49,15 +47,12 @@ function App() {
             }
           })
         })
+        resetTurn()
 
       } else {
-        // flip cards back over
-        console.log('those cards do not match')
+        setTimeout(() => resetTurn(), 800)
       }
-      resetTurn()
     }
-
-    console.log(cards)
 
   }, [choiceTwo])
 
@@ -75,7 +70,11 @@ function App() {
       <p>Turns: {turns}</p>
       <div className="card-grid">
         {cards.map(card => (
-          <SingleCard card={card} handleChoice={handleChoice} key={card.id}/>
+          <SingleCard 
+            card={card} 
+            handleChoice={handleChoice} 
+            key={card.id} 
+            flipped={card === choiceOne || card === choiceTwo || card.matched} />
         ))}
       </div>
     </div>
